@@ -70,18 +70,28 @@ public class Controller : MonoBehaviour
 
     private void HandleCameraLook()
     {
-        if (Mouse.current.rightButton.isPressed)
+        Vector2 mouseDelta = Mouse.current.delta.ReadValue();
+
+        float mouseX = mouseDelta.x * mouseSensitivity;
+        float mouseY = mouseDelta.y * mouseSensitivity;
+
+        transform.Rotate(Vector3.up * mouseX);
+
+        verticalRotation -= mouseY;
+        verticalRotation = Mathf.Clamp(verticalRotation, -maxLookAngle, maxLookAngle);
+        playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+       // if (Mouse.current.rightButton.isPressed)
         {
-            Vector2 mouseDelta = Mouse.current.delta.ReadValue();
+           // Vector2 mouseDelta = Mouse.current.delta.ReadValue();
 
-            float mouseX = mouseDelta.x * mouseSensitivity;
-            float mouseY = mouseDelta.y * mouseSensitivity;
+            //float mouseX = mouseDelta.x * mouseSensitivity;
+           // float mouseY = mouseDelta.y * mouseSensitivity;
 
-            transform.Rotate(Vector3.up * mouseX);
+           // transform.Rotate(Vector3.up * mouseX);
 
-            verticalRotation -= mouseY;
-            verticalRotation = Mathf.Clamp(verticalRotation, -maxLookAngle, maxLookAngle);
-            playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
+           // verticalRotation -= mouseY;
+            //verticalRotation = Mathf.Clamp(verticalRotation, -maxLookAngle, maxLookAngle);
+           // playerCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0f, 0f);
         }
     }
 }
